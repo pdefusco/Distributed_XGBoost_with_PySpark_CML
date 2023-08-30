@@ -24,7 +24,12 @@ Create a CML Project by cloning this Git repository from the CML UI.
 Launch a CML Session with the following configurations:
 
 ```
-
+Editor: JupyterLab
+Kernel: Python 3.8 or above
+Edition: Standard
+Version: any version ok
+Enable Spark: Spark 3.2.0 and above ok
+Resource Profile: 2vCPU / 4GiB Memory - 0 GPU
 ```
 
 Open the Terminal and install the required packages contained in the "requirements.txt" file with the following command:
@@ -33,7 +38,13 @@ Open the Terminal and install the required packages contained in the "requiremen
 pip3 install -r requirements.txt
 ```
 
-Navigate to the Workspace "Site Administration" page, open the "Runtime" tab and ensure that the "Burst CPU" option is enabled.
+![alt text](img/cml_terminal.png)
+
+![alt text](img/cml_terminal_2.png)
+
+Navigate to the Workspace "Site Administration" page, open the "Runtime" tab and ensure that the "Enable CPU Bursting" option is enabled.
+
+![alt text](img/site_admin.png)
 
 ## Running the Notebooks
 
