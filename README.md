@@ -46,8 +46,34 @@ Navigate to the Workspace "Site Administration" page, open the "Runtime" tab and
 
 ![alt text](img/site_admin.png)
 
-## Running the Notebooks
+## Using the Notebooks
 
+#### Set Spark Configurations
+
+Open the "sparkxgboostclf_basic.ipynb" notebook. Before running the notebooks you must edit your Spark Session configurations.
+
+On AWS, edit the value of the "spark.hadoop.fs.s3a.s3guard.ddb.region" and "spark.kerberos.access.hadoopFileSystems" options to reflect your CDP Environment.
+
+On all other platforms, remove the "spark.hadoop.fs.s3a.s3guard.ddb.region" from the code and set the "spark.kerberos.access.hadoopFileSystems" option only.
+
+The values for both options are available in the CDP Management Console under Environment Configurations. If you have issues finding these please contact your CDP Administrator.   
+
+```
+.config("spark.hadoop.fs.s3a.s3guard.ddb.region", "us-east-2")\
+.config("spark.kerberos.access.hadoopFileSystems", "s3a://go01-demo")\
+```
+
+#### Running All Cells
+
+No other edits are required. The JupyterLab Editor provides an intuitive way to run all cells. Select "Run" -> "Run All Cells" from the top bar menu.
+
+![alt text](img/notebook_1.png)
+
+![alt text](img/notebook_2.png)
+
+#### Code Walk-Through
+
+The 
 
 
 ## Summary and Next Steps
