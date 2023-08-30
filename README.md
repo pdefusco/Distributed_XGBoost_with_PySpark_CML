@@ -58,17 +58,17 @@ Navigate to the Workspace "Site Administration" page, open the "Runtime" tab and
 
 This part of the tutorial includes three sections:
 
-1. Set Spark Configurations
-2. Running All Cells
-3. Code Walk-Through
+1. [Set Spark Configurations](https://github.com/pdefusco/Distributed_XGBoost_with_PySpark_CML#set-spark-configurations)
+2. [Running All Cells](https://github.com/pdefusco/Distributed_XGBoost_with_PySpark_CML#running-all-cells)
+3. [Code Walk-Through](https://github.com/pdefusco/Distributed_XGBoost_with_PySpark_CML#code-walk-through)
 
 #### Set Spark Configurations
 
-Open the "sparkxgboostclf_basic.ipynb" notebook. Before running the notebooks you must edit your Spark Session configurations.
+Open the ```sparkxgboostclf_basic.ipynb``` notebook. Before running the notebooks you must edit your Spark Session configurations.
 
-On AWS, edit the value of the "spark.hadoop.fs.s3a.s3guard.ddb.region" and "spark.kerberos.access.hadoopFileSystems" options to reflect your CDP Environment.
+On AWS, edit the value of the ```spark.hadoop.fs.s3a.s3guard.ddb.region``` and ```spark.kerberos.access.hadoopFileSystems``` options to reflect your CDP Environment.
 
-On all other platforms, remove the "spark.hadoop.fs.s3a.s3guard.ddb.region" from the code and set the "spark.kerberos.access.hadoopFileSystems" option only.
+On all other platforms, remove the ```spark.hadoop.fs.s3a.s3guard.ddb.region``` from the code and set the ```spark.kerberos.access.hadoopFileSystems``` option only.
 
 The values for both options are available in the CDP Management Console under Environment Configurations. If you have issues finding these please contact your CDP Administrator.   
 
