@@ -2,11 +2,19 @@
 
 ## Objective
 
+XGBoost stands for Extreme Gradient Boosting and is a scalable, distributed gradient-boosted decision tree (GBDT) machine learning library. It has become a favorite among data scientists in business due to its exceptional performance, ability to handle sparse data and missing values, regularization, parallel computing, and more.
+
+Apache Spark is a powerful open-source engine for big data processing and analytics. Combining XGBoost and Spark can dramatically improve the quality and performance of your Machine Learning models.
+
 This GitHub repository provides notebook examples for using Spark to distribute XGBoost applications in Cloudera Machine Learning.
 
 ## About Cloudera Machine Learning
 
-Cloudera Machine Learning (CML) on Cloudera Data Platform accelerates time-to-value by enabling data scientists to collaborate in a single unified platform that is all inclusive for powering any AI use case. Purpose-built for agile experimentation and production ML workflows, Cloudera Machine Learning manages everything from data preparation to MLOps, to predictive reporting. Solve mission critical ML challenges along the entire lifecycle with greater speed and agility to discover opportunities which can mean the difference for your business.
+Cloudera Machine Learning (CML) on Cloudera Data Platform accelerates time-to-value by enabling data scientists to collaborate in a single unified platform that is all inclusive for powering any AI use case.
+
+CML is purpose-built for agile experimentation and production ML workflows. It is designed to manage everything from data preparation to MLOps and predictive reporting.
+
+Please visit the [CML Documentation](https://docs.cloudera.com/machine-learning/cloud/product/topics/ml-product-overview.html) for more information.
 
 ## Requirements
 
@@ -46,7 +54,13 @@ Navigate to the Workspace "Site Administration" page, open the "Runtime" tab and
 
 ![alt text](img/site_admin.png)
 
-## Using the Notebooks
+## Using the Notebook
+
+This part of the tutorial includes three sections:
+
+1. Set Spark Configurations
+2. Running All Cells
+3. Code Walk-Through
 
 #### Set Spark Configurations
 
@@ -63,17 +77,43 @@ The values for both options are available in the CDP Management Console under En
 .config("spark.kerberos.access.hadoopFileSystems", "s3a://go01-demo")\
 ```
 
+![alt text](img/notebook_2.png)
+
 #### Running All Cells
 
 No other edits are required. The JupyterLab Editor provides an intuitive way to run all cells. Select "Run" -> "Run All Cells" from the top bar menu.
 
 ![alt text](img/notebook_1.png)
 
-![alt text](img/notebook_2.png)
-
 #### Code Walk-Through
 
-The 
+This section will highlight the most important code in the notebook.
 
+* Cell 1: The "SparkXGBClassifier" class is imported from the "xgboost.spark" module. XGBoost also provides a "SparkXGBRegressor" class for Regression tasks.  
+
+* Cell 2: The SparkSession object is created. The "xgboost.spark" module requires disabling Spark Dynamic Allocation. Therefore we set four Executors with basic Memory and Core configurations.
+
+* Cell 3: The code to reach the Spark UI in CML. Run the cell and open the URL provided in the output to follow along in the Spark UI.
+
+* Cell 4 and 6: Two basic Spark Dataframes are created as training and test data.
+
+* Cell 7: an object of the "SparkXGBClassifier" class is instantiated with default hyperparameters. Notice the "num_workers" option is set to 2. This value should be set to the number of Executors you want to distribute your SparkXGBoost Application across.
+
+* Cell 8: the classifier is trained on the training data.
+
+* Cell 9: the classifier is used to run inference on the test data.
 
 ## Summary and Next Steps
+
+This basic example provided a Quickstart for Distributed XGBoost with PySpark in Cloudera Machine Learning.
+
+Integrating XGBoost and Spark provides data scientists with the opportunity to leverage the strengths of both. XGBoost is used to achieve high model performance. Spark is used to distribute advanced Machine Learning algorithms across large clusters of worker nodes.
+
+If you use CML you may also benefit from the following projects:
+
+* [Telco Churn Demo](https://github.com/pdefusco/CML_AMP_Churn_Prediction): Build an End to End ML Project in CML and Increase ML Explainability with the LIME Library
+* [Learn how to use Cloudera Applied ML Prototypes](https://docs.cloudera.com/machine-learning/cloud/applied-ml-prototypes/topics/ml-amps-overview.html) to discover more projects using MLFlow, Streamlit, Tensorflow, PyTorch and many more popular libraries
+* [CSA2CML](https://github.com/pdefusco/CSA2CML): Build a real time anomaly detection dashboard with Flink, CML, and Streamlit
+* [SDX2CDE](https://github.com/pdefusco/SDX2CDE): Explore ML Governance and Security features in SDX to increase legal compliance and enhance ML Ops best practices
+* [API v2](https://github.com/pdefusco/CML_AMP_APIv2): Familiarize yourself with API v2, CML's goto Python Library for ML Ops and DevOps
+* [MLOps](https://github.com/pdefusco/MLOps): Explore a detailed ML Ops pipeline powered by Apache Iceberg
