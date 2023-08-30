@@ -89,19 +89,72 @@ No other edits are required. The JupyterLab Editor provides an intuitive way to 
 
 This section will highlight the most important code in the notebook.
 
-* Cell 1: The "SparkXGBClassifier" class is imported from the "xgboost.spark" module. XGBoost also provides a "SparkXGBRegressor" class for Regression tasks.  
+* Cell 1: The "SparkXGBClassifier" class is imported from the "xgboost.spark" module. XGBoost also provides a "SparkXGBRegressor" class for Regression tasks.
+
+```
+from pyspark.sql import SparkSession
+from xgboost.spark import SparkXGBClassifier
+from pyspark.ml.linalg import Vectors
+```
 
 * Cell 2: The SparkSession object is created. The "xgboost.spark" module requires disabling Spark Dynamic Allocation. Therefore we set four Executors with basic Memory and Core configurations.
 
-* Cell 3: The code to reach the Spark UI in CML. Run the cell and open the URL provided in the output to follow along in the Spark UI.
+```
+spark = SparkSession\
+    .builder\
+    .appName("SparkXGBoostClassifier Example")\
+    .config("spark.hadoop.fs.s3a.s3guard.ddb.region", "us-east-2")\
+    .config("spark.kerberos.access.hadoopFileSystems","s3a://go01-demo")\
+    .config("spark.dynamicAllocation.enabled", "false")\
+    .config("spark.executor.cores", "4")\
+    .config("spark.executor.memory", "4g")\
+    .config("spark.executor.instances", "4")\
+    .config("spark.driver.core","4")\
+    .config("spark.driver.memory","4g")\
+    .getOrCreate()
+```
+
+* Cell 3: The code to reach the Spark UI in CML. Uncomment and run the cell and open the URL provided in the output to follow along in the Spark UI.
+
+```
+import os
+print("https://spark-"+os.environ["CDSW_ENGINE_ID"]+"."+os.environ["CDSW_DOMAIN"])
+```
 
 * Cell 4 and 6: Two basic Spark Dataframes are created as training and test data.
 
+```
+df_train = spark.createDataFrame([
+    (Vectors.dense(1.0, 2.0, 3.0), 0, False, 1.0),
+    (Vectors.sparse(3, {1: 1.0, 2: 5.5}), 1, False, 2.0),
+    (Vectors.dense(4.0, 5.0, 6.0), 0, True, 1.0),
+    (Vectors.sparse(3, {1: 6.0, 2: 7.5}), 1, True, 2.0),
+], ["features", "label", "isVal", "weight"])
+
+df_test = spark.createDataFrame([
+    (Vectors.dense(1.0, 2.0, 3.0), ),
+], ["features"])
+```
+
 * Cell 7: an object of the "SparkXGBClassifier" class is instantiated with default hyperparameters. Notice the "num_workers" option is set to 2. This value should be set to the number of Executors you want to distribute your SparkXGBoost Application across.
+
+```
+xgb_classifier = SparkXGBClassifier(max_depth=5, missing=0.0,
+    validation_indicator_col='isVal', weight_col='weight',
+    early_stopping_rounds=1, eval_metric='logloss', num_workers=2)
+```
 
 * Cell 8: the classifier is trained on the training data.
 
+```
+xgb_clf_model = xgb_classifier.fit(df_train)
+```
+
 * Cell 9: the classifier is used to run inference on the test data.
+
+```
+xgb_clf_model.transform(df_test).show()
+```
 
 ## Summary and Next Steps
 
