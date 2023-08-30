@@ -156,6 +156,12 @@ xgb_clf_model = xgb_classifier.fit(df_train)
 xgb_clf_model.transform(df_test).show()
 ```
 
++-------------+-------------+----------+-----------+
+|     features|rawPrediction|prediction|probability|
++-------------+-------------+----------+-----------+
+|[1.0,2.0,3.0]|   [-0.0,0.0]|       0.0|  [0.5,0.5]|
++-------------+-------------+----------+-----------+
+
 ## Summary and Next Steps
 
 This basic example provided a Quickstart for Distributed XGBoost with PySpark in Cloudera Machine Learning.
