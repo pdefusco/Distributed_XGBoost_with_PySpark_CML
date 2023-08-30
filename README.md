@@ -156,7 +156,7 @@ xgb_clf_model = xgb_classifier.fit(df_train)
 xgb_clf_model.transform(df_test).show()
 ```
 
-Classifier Predictions on Test Data:
+Classifier Sample Prediction on Test Data:
 
 ```
 +-------------+-------------+----------+-----------+
